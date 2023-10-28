@@ -2,6 +2,7 @@ package com.entropia.bookshelf.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,6 +27,30 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.entropia.bookshelf.R
+
+
+
+@Composable
+fun HomeScreen(retryAction: () -> Unit,
+               bookshelfUiState: BookshelfUiState,
+               modifier: Modifier){
+    when(bookshelfUiState){
+        is BookshelfUiState.Loading -> LoadingScreen(modifier)
+        is BookshelfUiState.Error -> ErrorScreen(retryAction = retryAction, modifier)
+        is BookshelfUiState.Success -> BooksGridScreen(contentPadding = PaddingValues(0.dp), modifier = modifier)
+    }
+}
+
+
+@Composable
+fun ResultScreen(books: String, modifier: Modifier){
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+    ) {
+        Text(text = books)
+    }
+}
 
 
 @Composable
