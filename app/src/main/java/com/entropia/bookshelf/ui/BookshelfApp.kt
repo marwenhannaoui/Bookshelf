@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.entropia.bookshelf.R
+import com.entropia.bookshelf.ui.screens.LoadingScreen
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -22,7 +23,7 @@ fun BookshelfApp(modifier: Modifier=Modifier) {
                 .fillMaxSize()
                 .padding(it)
         ) {
-            // TODO
+            LoadingScreen(modifier = Modifier.fillMaxSize())
         }
     }
 }

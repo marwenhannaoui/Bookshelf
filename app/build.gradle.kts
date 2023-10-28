@@ -83,4 +83,6 @@ dependencies {
 
     implementation ("androidx.compose.animation:animation")
     implementation ("androidx.compose.animation:animation-graphics")
+
+    implementation ("com.airbnb.android:lottie-compose:6.1.0")
 }
