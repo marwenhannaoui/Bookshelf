@@ -15,7 +15,7 @@ import com.entropia.bookshelf.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BookshelfApp(modifier: Modifier) {
+fun BookshelfApp(modifier: Modifier=Modifier) {
     Scaffold(topBar = { TopAppBar(title = { Text(text = stringResource(id = R.string.app_name)) }) }) {
         Surface(
             modifier = Modifier
