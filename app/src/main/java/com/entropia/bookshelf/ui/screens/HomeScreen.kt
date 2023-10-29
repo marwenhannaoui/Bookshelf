@@ -7,8 +7,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -27,23 +29,34 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.entropia.bookshelf.R
-
+import com.entropia.bookshelf.model.Volume
 
 
 @Composable
-fun HomeScreen(retryAction: () -> Unit,
-               bookshelfUiState: BookshelfUiState,
-               modifier: Modifier){
-    when(bookshelfUiState){
+fun HomeScreen(
+    retryAction: () -> Unit,
+    bookshelfUiState: BookshelfUiState,
+    modifier: Modifier
+) {
+    when (bookshelfUiState) {
         is BookshelfUiState.Loading -> LoadingScreen(modifier)
         is BookshelfUiState.Error -> ErrorScreen(retryAction = retryAction, modifier)
-        is BookshelfUiState.Success -> BooksGridScreen(contentPadding = PaddingValues(0.dp), modifier = modifier)
+        is BookshelfUiState.Success -> TestResultScreen(list = bookshelfUiState.volumes)
     }
 }
 
 
 @Composable
-fun ResultScreen(books: String, modifier: Modifier){
+fun TestResultScreen(list: List<Volume>) {
+    LazyColumn() {
+        items(items = list) { volume ->
+            Text(text = volume.selfLink)
+        }
+    }
+}
+
+@Composable
+fun ResultScreen(books: String, modifier: Modifier) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
@@ -81,7 +94,7 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
     ) {
         LottieAnimation(
             composition = composition,
-            iterations= LottieConstants.IterateForever,
+            iterations = LottieConstants.IterateForever,
             contentScale = ContentScale.Fit,
             modifier = Modifier
         )

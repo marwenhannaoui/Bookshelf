@@ -10,20 +10,23 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.entropia.bookshelf.R
-import com.entropia.bookshelf.ui.screens.LoadingScreen
+import com.entropia.bookshelf.ui.screens.BookshelfViewModel
+import com.entropia.bookshelf.ui.screens.HomeScreen
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BookshelfApp(modifier: Modifier=Modifier) {
+fun BookshelfApp(modifier: Modifier = Modifier) {
     Scaffold(topBar = { TopAppBar(title = { Text(text = stringResource(id = R.string.app_name)) }) }) {
         Surface(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
         ) {
-            LoadingScreen(modifier = Modifier.fillMaxSize())
+            val bookshelfViewModel: BookshelfViewModel = viewModel(factory = BookshelfViewModel.Factory)
+            HomeScreen(retryAction = bookshelfViewModel::getVolumes, bookshelfUiState = bookshelfViewModel.bookshelfUiState, modifier = Modifier.fillMaxSize() )
         }
     }
 }
