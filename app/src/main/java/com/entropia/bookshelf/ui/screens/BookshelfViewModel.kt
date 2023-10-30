@@ -13,6 +13,7 @@ import com.entropia.bookshelf.BookshelfApplication
 import com.entropia.bookshelf.data.VolumesRepository
 import com.entropia.bookshelf.model.Volume
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 
 sealed interface BookshelfUiState {
@@ -35,8 +36,8 @@ class BookshelfViewModel(private val volumesRepository: VolumesRepository) : Vie
         viewModelScope.launch {
 
             bookshelfUiState = try {
-                BookshelfUiState.Success(volumesRepository.getVolumes())
-            } catch (e: Exception){
+                BookshelfUiState.Success(volumesRepository.getVolumes("kotlin").items)
+            } catch (e: IOException){
                 BookshelfUiState.Error
             }
 

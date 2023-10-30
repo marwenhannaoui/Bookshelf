@@ -1,9 +1,11 @@
 package com.entropia.bookshelf.network
 
-import com.entropia.bookshelf.model.Volume
+import com.entropia.bookshelf.model.VolumeList
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface BookshelfApiService {
-    @GET ("volumes?q=jazz+history")
-    suspend fun getVolumes():List<Volume>
+
+    @GET("volumes")
+    suspend fun getVolumes(@Query("q") topic: String): VolumeList
 }
