@@ -2,16 +2,13 @@ package com.entropia.bookshelf.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -50,27 +47,6 @@ fun HomeScreen(
         is BookshelfUiState.Success -> BooksGridScreen(books = bookshelfUiState.books)
     }
 }
-
-
-@Composable
-fun TestResultScreen(list: List<Book>) {
-    LazyColumn() {
-        items(items = list) { volume ->
-            Text(text = volume.title)
-        }
-    }
-}
-
-@Composable
-fun ResultScreen(books: String, modifier: Modifier) {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier
-    ) {
-        Text(text = books)
-    }
-}
-
 
 @Composable
 fun BooksGridScreen(
