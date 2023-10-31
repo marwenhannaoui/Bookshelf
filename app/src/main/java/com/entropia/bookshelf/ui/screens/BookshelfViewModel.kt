@@ -11,13 +11,14 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.entropia.bookshelf.BookshelfApplication
 import com.entropia.bookshelf.data.VolumesRepository
+import com.entropia.bookshelf.model.Book
 import com.entropia.bookshelf.model.Volume
 import kotlinx.coroutines.launch
 import java.io.IOException
 
 
 sealed interface BookshelfUiState {
-    data class Success(val volumes: List<Volume>) : BookshelfUiState
+    data class Success(val books: List<Book>) : BookshelfUiState
     object Error : BookshelfUiState
 
     object Loading : BookshelfUiState
@@ -32,11 +33,11 @@ class BookshelfViewModel(private val volumesRepository: VolumesRepository) : Vie
         getVolumes()
     }
 
-    fun getVolumes() {
+    fun getVolumes(topic: String="kotlin") {
         viewModelScope.launch {
 
             bookshelfUiState = try {
-                BookshelfUiState.Success(volumesRepository.getVolumes("kotlin").items)
+                BookshelfUiState.Success(getBooks(volumesRepository.getVolumes(topic).items))
             } catch (e: IOException){
                 BookshelfUiState.Error
             }
@@ -44,6 +45,9 @@ class BookshelfViewModel(private val volumesRepository: VolumesRepository) : Vie
         }
     }
 
+    private fun getBooks(list: List<Volume>): List<Book>{
+        return list.map { volume-> volume.book }
+    }
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {

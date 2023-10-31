@@ -10,15 +10,14 @@ data class VolumeList(
 )
 
 @Serializable
-data class Volume(val selfLink: String)
+data class Volume(@SerialName(value="volumeInfo")val book: Book)
 
 
 @Serializable
 data class Book(
     val title: String,
-    val authors: Array<String>,
-    @SerialName(value = "volumeInfo.imageLinks.thumbnail")
-    val imgSrc: String
+    val authors: List<String>,
+    val imageLinks: Map<String,String> = emptyMap()
 )
 
 

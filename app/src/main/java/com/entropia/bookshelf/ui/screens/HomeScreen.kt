@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -19,17 +21,21 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.entropia.bookshelf.R
-import com.entropia.bookshelf.model.Volume
+import com.entropia.bookshelf.model.Book
+import com.entropia.bookshelf.util.parseUrl
 
 
 @Composable
@@ -41,16 +47,16 @@ fun HomeScreen(
     when (bookshelfUiState) {
         is BookshelfUiState.Loading -> LoadingScreen(modifier)
         is BookshelfUiState.Error -> ErrorScreen(retryAction = retryAction, modifier)
-        is BookshelfUiState.Success -> TestResultScreen(list = bookshelfUiState.volumes)
+        is BookshelfUiState.Success -> BooksGridScreen(books = bookshelfUiState.books)
     }
 }
 
 
 @Composable
-fun TestResultScreen(list: List<Volume>) {
+fun TestResultScreen(list: List<Book>) {
     LazyColumn() {
         items(items = list) { volume ->
-            Text(text = volume.selfLink)
+            Text(text = volume.title)
         }
     }
 }
@@ -67,20 +73,39 @@ fun ResultScreen(books: String, modifier: Modifier) {
 
 
 @Composable
-fun BooksGridScreen(modifier: Modifier = Modifier, contentPadding: PaddingValues) {
+fun BooksGridScreen(
+    books: List<Book>,
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(0.dp)
+) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(150.dp),
         modifier = modifier.fillMaxWidth(),
         contentPadding = contentPadding
     ) {
-        // TODO LazyGrid
+        items(items = books) { book ->
+            BookCard(book = book)
+        }
     }
 }
 
 @Composable
-fun BookCard(modifier: Modifier = Modifier) {
-    Card(modifier = modifier) {
-        //TODO BookCard
+fun BookCard(book: Book, modifier: Modifier = Modifier) {
+    Card(modifier = modifier,
+        shape = RoundedCornerShape(0.dp)
+    ) {
+        AsyncImage(
+            model = ImageRequest.Builder(context = LocalContext.current)
+                .data(parseUrl(book.imageLinks["thumbnail"]) )
+                .crossfade(true)
+                .build(), contentDescription = null,
+            contentScale = ContentScale.Crop,
+            error = painterResource(id = R.drawable.no_cover_thumbnail),
+            placeholder = painterResource(id = R.drawable.no_cover_thumbnail),
+            modifier = Modifier.fillMaxWidth()
+        )
+
+
     }
 }
 
