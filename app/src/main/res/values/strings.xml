@@ -3,4 +3,6 @@
     <string name="retry">Retry</string>
     <string name="connection_error">Connection Error</string>
     <string name="loading">Loading</string>
+    <string name="search">Search</string>
+    <string name="enter_topic">Enter Topic</string>
 </resources>
