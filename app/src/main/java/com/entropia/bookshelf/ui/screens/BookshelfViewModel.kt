@@ -1,5 +1,6 @@
 package com.entropia.bookshelf.ui.screens
 
+import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -44,8 +45,8 @@ class BookshelfViewModel(private val volumesRepository: VolumesRepository) : Vie
 
         }
     }
-
-    private fun getBooks(list: List<Volume>): List<Book>{
+    @VisibleForTesting(otherwise = 2)
+    fun getBooks(list: List<Volume>): List<Book>{
         return list.map { volume-> volume.book }
     }
     companion object {
