@@ -103,7 +103,8 @@ fun BookCard(book: Book, modifier: Modifier = Modifier) {
                         )
                         Text(
                             text = book.authors.toString().removeSurrounding("[", "]"),
-                            style = MaterialTheme.typography.bodyMedium
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.padding(top= dimensionResource(id = R.dimen.padding_small))
                         )
                     }
                 }

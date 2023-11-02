@@ -1,5 +1,7 @@
-package com.entropia.bookshelf.fake
+package com.entropia.bookshelf
 
+import com.entropia.bookshelf.fake.FakeDataSource
+import com.entropia.bookshelf.fake.FakeNetworkVolumesRepository
 import com.entropia.bookshelf.rules.TestDispatcherRule
 import com.entropia.bookshelf.ui.screens.BookshelfUiState
 import com.entropia.bookshelf.ui.screens.BookshelfViewModel

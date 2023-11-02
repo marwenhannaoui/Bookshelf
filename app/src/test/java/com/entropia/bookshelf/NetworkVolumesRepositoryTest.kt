@@ -1,6 +1,8 @@
-package com.entropia.bookshelf.fake
+package com.entropia.bookshelf
 
 import com.entropia.bookshelf.data.NetworkVolumesRepository
+import com.entropia.bookshelf.fake.FakeBookshelfApiService
+import com.entropia.bookshelf.fake.FakeDataSource
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
